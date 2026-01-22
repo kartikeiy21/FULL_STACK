@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Banking Interface</title>
+
+<style>
+*{
+    margin:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f2f2f2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.bank{
+    background:#ffffff;
+    width:350px;
+    padding:20px;
+    border-radius:8px;
+    box-shadow:0 0 10px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:15px;
+}
+
+.balance{
+    background:#e6f7ff;
+    padding:15px;
+    text-align:center;
+    margin-bottom:15px;
+    font-size:18px;
+    border-radius:5px;
+}
+
+input{
+    width:100%;
+    padding:8px;
+    margin-bottom:10px;
+}
+
+button{
+    width:48%;
+    padding:8px;
+    cursor:pointer;
+}
+
+.actions{
+    display:flex;
+    justify-content:space-between;
+}
+
+/* Responsive */
+@media(max-width:400px){
+    .bank{
+        width:90%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bank">
+    <h2>Bank Account</h2>
+
+    <div class="balance">
+        Balance: ₹<span id="balance">0</span>
+    </div>
+
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <div class="actions">
+        <button onclick="deposit()">Deposit</button>
+        <button onclick="withdraw()">Withdraw</button>
+    </div>
+</div>
+
+<script>
+let balance = 1000;
+
+function deposit(){
+    let amt = Number(document.getElementById("amount").value);
+    if(amt > 0){
+        balance += amt;
+        updateBalance();
+    }
+}
+
+function withdraw(){
+    let amt = Number(document.getElementById("amount").value);
+    if(amt > 0 && amt <= balance){
+        balance -= amt;
+        updateBalance();
+    }
+}
+
+function updateBalance(){
+    document.getElementById("balance").innerText = balance;
+    document.getElementById("amount").value = "";
+}
+</script>
+
+</body>  
+</html>
