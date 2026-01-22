@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Admin Dashboard</title>
+
+<style>
+:root{
+    --bg:#ffffff;
+    --text:#000000;
+    --card:#f2f2f2;
+}
+.dark{
+    --bg:#121212;
+    --text:#ffffff;
+    --card:#8dc027;
+}
+
+*{margin:0; box-sizing:border-box; font-family:Arial;}
+
+body{
+    background:var(--bg);
+    color:var(--text);
+}
+
+.dashboard{
+    display:grid;
+    grid-template-areas:
+        "header header"
+        "sidebar main"
+        "footer footer";
+    grid-template-columns:200px 1fr;
+    grid-template-rows:60px 1fr 40px;
+    min-height:100vh;
+}
+
+header{
+    grid-area:header;
+    background:var(--card);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 15px;
+}
+
+aside{
+    grid-area:sidebar;
+    background:var(--card);
+    padding:15px;
+}
+
+main{
+    grid-area:main;
+    padding:15px;
+}
+
+footer{
+    grid-area:footer;
+    background:var(--card);
+    text-align:center;
+    padding:10px;
+}
+
+.card{
+    background:var(--card);
+    padding:15px;
+    margin-bottom:10px;
+    border-radius:5px;
+}
+
+button{
+    padding:6px 12px;
+    cursor:pointer;
+}
+
+/* Responsive */
+@media(max-width:600px){
+    .dashboard{
+        grid-template-areas:
+            "header"
+            "main"
+            "sidebar"
+            "footer";
+        grid-template-columns:1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="dashboard">
+    <header>
+        <h3>Admin Dashboard</h3>
+        <button onclick="toggleTheme()">Theme</button>
+    </header>
+
+    <aside>
+        <p>Dashboard</p>
+        <p>Users</p>
+        <p>Settings</p>
+    </aside>
+
+    <main>
+        <div class="card">Users: 120</div>
+        <div class="card">Revenue: ₹50,000</div>
+        <div class="card">Reports</div>
+    </main>
+
+    <footer>© 2026 Admin Panel</footer>
+</div>
+
+<script>
+function toggleTheme(){
+    document.body.classList.toggle("dark");
+    localStorage.setItem(
+        "theme",
+        document.body.classList.contains("dark") ? "dark" : "light"
+    );
+}
+
+if(localStorage.getItem("theme")==="dark"){
+    document.body.classList.add("dark");
+}
+</script>
+
+</body>
+</html>
