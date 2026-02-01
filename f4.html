@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Live Character Counter</title>
+
+<style>
+:root {
+    --primary: #6366f1;
+    --success: #22c55e;
+    --warning: #f59e0b;
+    --danger: #ef4444;
+    --bg: #0f172a;
+    --card: #020617;
+    --text: #e5e7eb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #8792aa, #a3acd4);
+    font-family: "Segoe UI", sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card {
+    width: 420px;
+    background: var(--card);
+    border-radius: 18px;
+    padding: 25px;
+    box-shadow: 0 20px 40px rgba(0,0,0,.5);
+}
+
+.card h2 {
+    margin: 0 0 12px;
+    text-align: center;
+    color: var(--text);
+    letter-spacing: 1px;
+}
+
+.card p {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    height: 140px;
+    background: #020617;
+    border: 2px solid #1e293b;
+    border-radius: 14px;
+    padding: 14px;
+    color: var(--text);
+    font-size: 15px;
+    resize: none;
+    outline: none;
+    transition: all .3s ease;
+}
+
+textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(99,102,241,.3);
+}
+
+.progress-container {
+    margin-top: 14px;
+    height: 8px;
+    background: #1e293b;
+    border-radius: 50px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: var(--success);
+    transition: width .3s ease, background .3s ease;
+}
+
+.counter {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--success);
+}
+
+.counter span:last-child {
+    font-weight: bold;
+}
+
+.warning {
+    color: var(--warning);
+}
+
+.danger {
+    color: var(--danger);
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>Character Counter</h2>
+    <p>Type your message below</p>
+
+    <textarea id="textInput" maxlength="200" placeholder="Start typing..."></textarea>
+
+    <div class="progress-container">
+        <div id="progressBar" class="progress-bar"></div>
+    </div>
+
+    <div id="counter" class="counter">
+        <span>Status: OK</span>
+        <span>0 / 200</span>
+    </div>
+</div>
+
+<script>
+const textarea = document.getElementById("textInput");
+const counter = document.getElementById("counter");
+const progressBar = document.getElementById("progressBar");
+const maxChars = 200;
+
+textarea.addEventListener("input", () => {
+    const length = textarea.value.length;
+    const percent = (length / maxChars) * 100;
+
+    counter.children[1].textContent = `${length} / ${maxChars}`;
+    progressBar.style.width = percent + "%";
+
+    if (length > 160) {
+        counter.className = "counter danger";
+        counter.children[0].textContent = "Status: Limit Almost Reached";
+        progressBar.style.background = "var(--danger)";
+    } 
+    else if (length > 120) {
+        counter.className = "counter warning";
+        counter.children[0].textContent = "Status: Near Limit";
+        progressBar.style.background = "var(--warning)";
+    } 
+    else {
+        counter.className = "counter";
+        counter.children[0].textContent = "Status: OK";
+        progressBar.style.background = "var(--success)";
+    }
+});
+</script>
+
+</body>
+</html>
