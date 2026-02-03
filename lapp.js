@@ -70,11 +70,11 @@ app.get("/", (req, res) => {
             margin: 0;
         }
         .container {
-            max-width: 600px;
+            max-width: 980px; /* increased width for larger white area */
             background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 48px; /* more breathing room */
+            border-radius: 12px;
+            box-shadow: 0 12px 32px rgba(0,0,0,0.12);
             border: 2px solid rgba(0,0,0,0.06);
             text-align: center;
         }
@@ -115,8 +115,8 @@ app.get("/", (req, res) => {
             gap: 12px;
             align-items: center;
             width: 100%;
-            max-width: 760px;
-            margin: 10px auto;
+            max-width: 920px; /* match expanded container */
+            margin: 12px auto;
         }
         .add-fields { display: flex; flex-direction: column; gap: 8px; }
         .add-actions { display: flex; align-items: center; justify-content: center; padding-left: 12px; }
@@ -150,11 +150,11 @@ app.get("/", (req, res) => {
             grid-template-columns: 1fr 160px;
             gap: 12px;
             align-items: center;
-            max-width: 760px;
-            margin: 10px auto;
-            padding: 10px;
+            max-width: 920px; /* match expanded container */
+            margin: 14px auto;
+            padding: 12px;
             background-color: #80abcf;
-            border-radius: 5px;
+            border-radius: 8px;
             border: 2px solid #ba1212; /* slightly thicker */
         }
         .book button {
