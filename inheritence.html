@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Advanced OOP with React</title>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        h1 {
+            color: #e70000d0;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            
+        }
+        .filter-buttons {
+            margin-bottom: 20px;
+        }
+        button {
+            margin: 0 10px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            border-left: 5px solid;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        .card.student {
+            border-left-color: #4CAF50;
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+        }
+        .card.teacher {
+            border-left-color: #2196F3;
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+        }
+        .card h3 {
+            margin: 0 0 10px 0;
+            color: #333;
+            font-size: 1.4em;
+        }
+        .card p {
+            margin: 5px 0;
+            color: #555;
+            line-height: 1.5;
+        }
+        .role-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .student .role-badge {
+            background: #4CAF50;
+            color: white;
+        }
+        .teacher .role-badge {
+            background: #2196F3;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+<div id="root"></div>
+
+<script>
+
+class Person {
+    constructor(id, name, age) {
+        if (this.constructor === Person) {
+            throw new Error("Person is an abstract class");
+        }
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+
+    getRole() {
+        throw new Error("Method must be overridden");
+    }
+
+    getDetails() {
+        return `${this.getRole()} | ${this.name}, Age: ${this.age}`;
+    }
+}
+
+class Student extends Person {
+    constructor(id, name, age, grade, major, description) {
+        super(id, name, age);
+        this.grade = grade;
+        this.major = major;
+        this.description = description;
+    }
+
+    getRole() {
+        return "Student";
+    }
+
+    getDetails() {
+        return `${super.getDetails()}, Grade: ${this.grade}, Major: ${this.major}`;
+    }
+}
+
+class Teacher extends Person {
+    constructor(id, name, age, subject, experience, description) {
+        super(id, name, age);
+        this.subject = subject;
+        this.experience = experience;
+        this.description = description;
+    }
+
+    getRole() {
+        return "Teacher";
+    }
+
+    getDetails() {
+        return `${super.getDetails()}, Subject: ${this.subject}`;
+    }
+}
+
+function App() {
+
+    const [people, setPeople] = React.useState([
+        new Student(1, "Anita", 20, "A", "Computer Science", "Passionate about coding and AI, leads the robotics club."),
+        new Teacher(2, "Mr.Rakesh Sharma", 45, "Mathematics", 20, "Experienced educator with a PhD in Applied Mathematics, specializes in calculus."),
+        new Student(3, "Rohit", 21, "B", "Physics", "Aspiring physicist, conducts research on quantum mechanics."),
+        new Teacher(4, "Ms.Sonam Patel", 38, "English Literature", 15, "Award-winning author and poet, focuses on creative writing."),
+        new Student(5, "Priya", 19, "A+", "Biology", "Future doctor, volunteers at local clinics and studies genetics."),
+        new Teacher(6, "Dr.Aditya Kumar", 52, "Chemistry", 28, "Research scientist turned teacher, expert in organic chemistry."),
+        new Student(7, "Arjun", 22, "A-", "Engineering", "Innovative engineer, developing sustainable energy solutions."),
+        new Teacher(8, "Mrs.Sonal Singh", 41, "History", 18, "Cultural historian, passionate about preserving ancient traditions.")
+    ]);
+
+    const [filter, setFilter] = React.useState("All");
+
+    const filteredPeople = people.filter(p =>
+        filter === "All" ? true : p.getRole() === filter
+    );
+
+    return React.createElement(
+        "div",
+        { className: "container" },
+
+        React.createElement("h1", null, " Inheritance & Polymorphism "),
+
+        React.createElement(
+            "div",
+            { className: "filter-buttons" },
+            React.createElement("button", { onClick: () => setFilter("All") }, "All"),
+            React.createElement("button", { onClick: () => setFilter("Student") }, "Students"),
+            React.createElement("button", { onClick: () => setFilter("Teacher") }, "Teachers")
+        ),
+
+        filteredPeople.map(person =>
+            React.createElement(
+                "div",
+                { className: "card " + person.getRole().toLowerCase(), key: person.id },
+                React.createElement("span", { className: "role-badge" }, person.getRole()),
+                React.createElement("h3", null, person.name),
+                React.createElement("p", null, React.createElement("strong", null, "Age:"), " " + person.age),
+                person instanceof Student ? React.createElement("p", null, React.createElement("strong", null, "Grade:"), " " + person.grade, " | ", React.createElement("strong", null, "Major:"), " " + person.major) : null,
+                person instanceof Teacher ? React.createElement("p", null, React.createElement("strong", null, "Subject:"), " " + person.subject, " | ", React.createElement("strong", null, "Experience:"), " " + person.experience + " years") : null,
+                React.createElement("p", null, person.description)
+            )
+        )
+    );
+}
+
+ReactDOM.createRoot(document.getElementById("root"))
+    .render(React.createElement(App));
+</script>
+</body>
+</html>
